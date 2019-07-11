@@ -7,10 +7,9 @@ addons:
 before_install:
 - openssl aes-256-cbc -K $encrypted_48d68faa864c_key -iv $encrypted_48d68faa864c_iv
   -in deploy_rsa.enc -out deploy_rsa -d
-
-deploy:
-  provider: script
-  skip_cleanup: true
-  script: deploy.sh
-  on:
-    branch: master
+- eval "$(ssh-agent -s)"
+- chmod 600 ./deploy_rsa
+- echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+- ssh-add ./deploy_rsa
+- ssh -i ./deploy_rsa root@165.22.68.209 pwd
+# test ssh connection for: https://github.com/dwyl/learn-travis/issues/42
