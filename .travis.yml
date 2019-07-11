@@ -1,4 +1,6 @@
 language: node_js
 node_js:
-  - "10"
-
+- '10'
+before_install:
+- openssl aes-256-cbc -K $encrypted_48d68faa864c_key -iv $encrypted_48d68faa864c_iv
+  -in deploy_rsa.enc -out deploy_rsa -d
