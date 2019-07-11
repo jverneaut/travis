@@ -1,6 +1,16 @@
 language: node_js
 node_js:
 - '10'
+
+addons:
+  ssh_known_hosts: 165.22.68.209
 before_install:
 - openssl aes-256-cbc -K $encrypted_48d68faa864c_key -iv $encrypted_48d68faa864c_iv
   -in deploy_rsa.enc -out deploy_rsa -d
+
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR root@165.22.68.209/travis
+  on:
+    branch: master
