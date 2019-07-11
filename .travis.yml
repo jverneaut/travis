@@ -16,5 +16,6 @@ before_install:
 - ssh -i ./deploy_rsa root@165.22.68.209 pwd
 
 after_success:
+  - ssh -i ./deploy_rsa root@165.22.68.209
   - git pull
   - pm2 restart 0
